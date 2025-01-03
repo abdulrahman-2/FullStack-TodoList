@@ -1,5 +1,5 @@
 import { Button } from "@/components/ui/button";
-import { socialLogin } from "@/lib/actions";
+import { socialLogin } from "@/lib/actions/authActions";
 import { FaGithub } from "react-icons/fa";
 
 const Github = () => {

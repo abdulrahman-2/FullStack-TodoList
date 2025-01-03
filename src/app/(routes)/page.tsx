@@ -5,7 +5,7 @@ import { FaTasks } from "react-icons/fa";
 
 const Home = () => {
   return (
-    <>
+    <div className="flex flex-col items-center justify-center h-[calc(100vh-120px)]">
       <div className="flex items-center justify-between gap-20">
         <BiTask className="hidden md:block size-20 -rotate-45 text-primary" />
         <div className="text-center">
@@ -25,7 +25,7 @@ const Home = () => {
           Get Started
         </Button>
       </Link>
-    </>
+    </div>
   );
 };
 

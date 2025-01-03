@@ -17,11 +17,11 @@ import { loginSchema } from "@/zod/ValidationSchema";
 import { FormProvider, useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useState } from "react";
-import { login } from "@/lib/actions";
 import { useRouter } from "next/navigation";
 import Github from "./Github";
 import Google from "./Google";
 import toast from "react-hot-toast";
+import { login } from "@/lib/actions/AuthActions";
 
 type FormData = z.infer<typeof loginSchema>;
 

@@ -3,7 +3,7 @@
 import User from "@/models/User";
 import bcrypt from "bcryptjs";
 import { signIn } from "@/auth";
-import { connectDB } from "./mongodb";
+import { connectDB } from "../mongodb";
 
 export const register = async (data: {
   name: string;

@@ -5,20 +5,19 @@ import Logo from "../common/Logo";
 import { ModeToggle } from "../common/ModeToggel";
 import { Button } from "../ui/button";
 import Link from "next/link";
-import { signOut, useSession } from "next-auth/react";
+import { useSession } from "next-auth/react";
+import { UserToggle } from "../common/UserToggle";
 
 const Header = () => {
   const { data: session } = useSession();
 
   return (
-    <div className="container flex items-center justify-between py-10">
+    <div className="container flex items-center justify-between p-5 sm:py-10">
       <Logo />
-      <div className="flex items-center gap-2 md:gap-5">
+      <div className="flex items-center gap-3">
         {session ? (
           <>
-            <Button onClick={() => signOut()} className="font-bold px-5">
-              Logout
-            </Button>
+            <UserToggle email={session.user?.email as string} />
           </>
         ) : (
           <Link href="/login">

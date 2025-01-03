@@ -17,9 +17,9 @@ import { FormProvider, useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { VscEye } from "react-icons/vsc";
 import { useState } from "react";
-import { register } from "@/lib/actions";
 import { useRouter } from "next/navigation";
 import toast from "react-hot-toast";
+import { register } from "@/lib/actions/authActions";
 
 type FormData = z.infer<typeof registerSchema>;
 

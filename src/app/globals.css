@@ -9,6 +9,19 @@
 }
 
 @layer utilities {
+  ::-webkit-scrollbar {
+    width: 5px;
+  }
+  ::-webkit-scrollbar-track {
+    background-color: #d1d5db;
+  }
+  ::-webkit-scrollbar-thumb {
+    background-color: hsla(142.1, 70.6%, 45.3%, 1);
+    transition: all 0.3s ease-in-out;
+  }
+  ::-webkit-scrollbar-thumb:hover {
+    background-color: hsla(142, 70%, 36%, 0.8);
+  }
   .text-balance {
     text-wrap: balance;
   }

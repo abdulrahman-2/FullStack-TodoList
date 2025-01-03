@@ -33,7 +33,7 @@ export default function RootLayout({
           <SessionProviderLayout>
             <Notifications />
             <Header />
-            <div className="container flex flex-col items-center justify-center h-[calc(100vh-120px)]">
+            <div className="container flex flex-col items-center justify-center h-full">
               {children}
             </div>
           </SessionProviderLayout>
