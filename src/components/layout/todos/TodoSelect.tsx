@@ -10,6 +10,7 @@ interface CustomSelectProps {
   selectedValue: string;
   setSelectedValue: (value: string) => void;
 }
+
 const priorities = ["low", "medium", "high"];
 
 export function TodoSelect({

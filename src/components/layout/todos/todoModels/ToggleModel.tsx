@@ -68,7 +68,7 @@ export function ToggleModel({ todo }: { todo?: TodoType }) {
         setCompleted(false);
         setIsOpen(false); // Close the dialog
         toast.success(res.success);
-        window.location.reload();
+        // window.location.reload();
       } else {
         toast.error(res.error || "Failed to process todo");
       }
@@ -116,7 +116,7 @@ export function ToggleModel({ todo }: { todo?: TodoType }) {
                 defaultValue={priority}
                 onValueChange={setPriority as any}
               >
-                <SelectTrigger className="w-[180px]">
+                <SelectTrigger className="w-[130px] sm:w-[180px]">
                   <SelectValue />
                 </SelectTrigger>
                 <SelectContent>
@@ -151,7 +151,7 @@ export function ToggleModel({ todo }: { todo?: TodoType }) {
                 defaultValue={completed ? "completed" : "in progress"}
                 onValueChange={(value) => setCompleted(value === "completed")}
               >
-                <SelectTrigger className="w-[180px]">
+                <SelectTrigger className="w-[130px] sm:w-[180px]">
                   <SelectValue />
                 </SelectTrigger>
                 <SelectContent>
