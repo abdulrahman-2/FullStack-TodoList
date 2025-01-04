@@ -21,7 +21,7 @@ import { useRouter } from "next/navigation";
 import Github from "./Github";
 import Google from "./Google";
 import toast from "react-hot-toast";
-import { login } from "@/lib/actions/AuthActions";
+import { login } from "@/lib/actions/authActions";
 
 type FormData = z.infer<typeof loginSchema>;
 

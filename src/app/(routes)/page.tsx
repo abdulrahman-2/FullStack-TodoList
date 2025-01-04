@@ -13,7 +13,7 @@ const Home = () => {
             Welcome to Amazing <br />{" "}
             <span className="text-primary">Quick Task</span> App 🚀
           </h1>
-          <p className="mt-5 font-semibold text-sm md:text-xl max-w-[60%] mx-auto text-secondary-foreground">
+          <p className="mt-5 font-semibold text-sm md:text-xl max-w-[80%] sm:max-w-[60%] mx-auto text-secondary-foreground">
             Quick Task is your go-to solution for managing tasks effortlessly.
             Stay organized, save time.
           </p>
@@ -21,7 +21,7 @@ const Home = () => {
         <FaTasks className="hidden md:block size-20 -rotate-45 text-primary" />
       </div>
       <Link href="/login">
-        <Button className="mt-10 w-[120px] md:w-[200px] font-bold text-lg">
+        <Button className="mt-8 w-[150px] md:w-[200px] font-bold text-lg">
           Get Started
         </Button>
       </Link>

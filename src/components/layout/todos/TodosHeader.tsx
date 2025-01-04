@@ -1,5 +1,5 @@
 import React from "react";
-import { AddModel } from "./todoModels/AddModel";
+import { ToggleModel } from "./todoModels/ToggleModel";
 
 const TodosHeader = () => {
   return (
@@ -11,7 +11,7 @@ const TodosHeader = () => {
           {new Date().toDateString()}
         </span>
       </div>
-      <AddModel />
+      <ToggleModel />
     </div>
   );
 };

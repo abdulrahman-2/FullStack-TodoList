@@ -7,13 +7,12 @@ import {
 } from "@/components/ui/select";
 
 interface CustomSelectProps {
-  data: string[];
   selectedValue: string;
   setSelectedValue: (value: string) => void;
 }
+const priorities = ["low", "medium", "high"];
 
 export function TodoSelect({
-  data,
   selectedValue,
   setSelectedValue,
 }: CustomSelectProps) {
@@ -28,7 +27,7 @@ export function TodoSelect({
         <SelectValue />
       </SelectTrigger>
       <SelectContent>
-        {data.map((option) => (
+        {priorities.map((option) => (
           <SelectItem className="capitalize" key={option} value={option}>
             <span
               className={`inline-block size-3 rounded-full mr-2 ${

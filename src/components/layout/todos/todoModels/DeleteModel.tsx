@@ -57,7 +57,7 @@ export function DeleteModel({
     <AlertDialog>
       <AlertDialogTrigger asChild>
         {deleteAll ? (
-          <Button variant="ghost">Delete All</Button>
+          <Button variant="ghost">Clear All</Button>
         ) : (
           <span className="text-red-500 block w-full">Delete</span>
         )}

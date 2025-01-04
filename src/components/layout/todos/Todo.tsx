@@ -10,57 +10,42 @@ import toast from "react-hot-toast";
 import { Label } from "@/components/ui/label";
 import { TodoOptions } from "./TodoOptions";
 
-const priorities = ["low", "medium", "high"];
-
 const Todo = ({ todo }: { todo: TodoType }) => {
   const [priority, setPriority] = useState(todo.priority);
   const [completed, setCompleted] = useState(todo.completed);
   const { data: session } = useSession();
 
-  const handleCompleteChange = async () => {
+  const handleUpdate = async (updates: Partial<TodoType>) => {
     if (!session?.user?.id) {
       toast.error("User not found");
       return;
     }
     try {
-      const res = await updateTodo(session.user.id, todo._id, {
-        completed: !completed,
-      });
+      const res = await updateTodo(session.user.id, todo._id, updates);
       if (res.success) {
         toast.success(res.success);
-        setCompleted(!completed);
+        if (updates.completed !== undefined) setCompleted(updates.completed);
+        if (updates.priority) setPriority(updates.priority);
       } else {
-        toast.error(res.error || "Failed to update completion status");
+        toast.error(res.error || "Failed to update todo");
       }
     } catch (error) {
-      toast.error(`Failed to update completion status: ${error}`);
+      toast.error(`Failed to update todo: ${error}`);
     }
   };
 
+  const handleCompleteChange = async () => {
+    await handleUpdate({ completed: !completed });
+  };
+
   const handlePriorityChange = async (newPriority: string) => {
-    if (!session?.user?.id) {
-      toast.error("User not found");
-      return;
-    }
-    try {
-      const res = await updateTodo(session.user.id, todo._id, {
-        priority: newPriority,
-      });
-      if (res.success) {
-        toast.success(res.success);
-        setPriority(newPriority as "low" | "medium" | "high");
-      } else {
-        toast.error(res.error || "Failed to update priority");
-      }
-    } catch (error) {
-      toast.error(`Failed to update priority: ${error}`);
-    }
+    await handleUpdate({ priority: newPriority as TodoType["priority"] });
   };
 
   return (
     <div
       className={`p-3 rounded-xl border border-border flex flex-col sm:flex-row justify-between gap-3 items-start sm:items-center 
-      ${todo.completed ? "opacity-50" : "opacity-100"}`}
+      ${completed ? "opacity-50" : "opacity-100"}`}
     >
       <div>
         <div className="flex items-center gap-2">
@@ -76,12 +61,11 @@ const Todo = ({ todo }: { todo: TodoType }) => {
           </Label>
         </div>
         <span className="text-sm text-gray-400 border border-border rounded-lg pl-1 pr-20 ml-7">
-          {todo.completed ? "Completed" : "in progress"}
+          {completed ? "Completed" : "In progress"}
         </span>
       </div>
       <div className="flex items-center self-end gap-3">
         <TodoSelect
-          data={priorities}
           selectedValue={priority}
           setSelectedValue={handlePriorityChange}
         />
