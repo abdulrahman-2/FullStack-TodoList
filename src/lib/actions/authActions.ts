@@ -4,6 +4,7 @@ import User from "@/models/User";
 import bcrypt from "bcryptjs";
 import { signIn } from "@/auth";
 import { connectDB } from "../mongodb";
+import mongoose from "mongoose";
 
 export const register = async (data: {
   name: string;
@@ -18,7 +19,12 @@ export const register = async (data: {
     }
 
     const hashedPassword = await bcrypt.hash(data.password, 10);
-    await User.create({ ...data, password: hashedPassword });
+    await User.create({
+      _id: new mongoose.Types.ObjectId().toString(),
+      ...data,
+      password: hashedPassword,
+      authMethod: "credentials",
+    });
     return { success: "User created successfully" };
   } catch (error: any) {
     console.error(error);

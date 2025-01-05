@@ -5,7 +5,7 @@ import { DeleteModel } from "@/components/layout/todos/todoModels/DeleteModel";
 import TodosHeader from "@/components/layout/todos/TodosHeader";
 import { fetchUserTodos } from "@/lib/actions/todosActions";
 import { TodoType } from "@/types";
-import { MdOutlineHourglassEmpty } from "react-icons/md";
+import { FaUmbrellaBeach } from "react-icons/fa";
 
 const Todos = async () => {
   const session = await auth();
@@ -27,9 +27,9 @@ const Todos = async () => {
       <TodosHeader />
 
       {todos.length === 0 ? (
-        <div className="flex flex-col text-gray-400 items-center justify-center gap-5 h-[275px]">
-          <MdOutlineHourglassEmpty size={120} />
-          <h3 className="font-bold text-center max-w-[40%]">
+        <div className="flex flex-col text-gray-400 items-center justify-center h-[275px]">
+          <FaUmbrellaBeach className="size-32 sm:size-40" />
+          <h3 className="font-bold text-center max-w-[80%] sm:max-w-[40%]">
             It looks like there are no tasks available. Click above to add a new
             task.
           </h3>

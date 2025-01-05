@@ -4,11 +4,11 @@ import { useState } from "react";
 import { TodoType } from "@/types";
 import { useSession } from "next-auth/react";
 import { TodoSelect } from "./TodoSelect";
-import { Input } from "@/components/ui/input";
 import { updateTodo } from "@/lib/actions/todosActions";
 import toast from "react-hot-toast";
 import { Label } from "@/components/ui/label";
 import { TodoOptions } from "./TodoOptions";
+import { Checkbox } from "@/components/ui/checkbox";
 
 const Todo = ({ todo }: { todo: TodoType }) => {
   const [priority, setPriority] = useState(todo.priority);
@@ -35,10 +35,13 @@ const Todo = ({ todo }: { todo: TodoType }) => {
   };
 
   const handleCompleteChange = async () => {
-    await handleUpdate({ completed: !completed });
+    const newCompleted = !completed;
+    setCompleted(newCompleted);
+    await handleUpdate({ completed: newCompleted });
   };
 
   const handlePriorityChange = async (newPriority: string) => {
+    setPriority(newPriority as TodoType["priority"]);
     await handleUpdate({ priority: newPriority as TodoType["priority"] });
   };
 
@@ -49,12 +52,11 @@ const Todo = ({ todo }: { todo: TodoType }) => {
     >
       <div>
         <div className="flex items-center gap-2">
-          <Input
+          <Checkbox
             id={`todo-${todo._id}`}
             className="size-5"
-            type="checkbox"
             checked={completed}
-            onChange={handleCompleteChange}
+            onCheckedChange={handleCompleteChange}
           />
           <Label htmlFor={`todo-${todo._id}`} className="text-xl">
             {todo.title}

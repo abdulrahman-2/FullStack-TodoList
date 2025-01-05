@@ -66,7 +66,7 @@ export function ToggleModel({ todo }: { todo?: TodoType }) {
         setTitle("");
         setPriority("medium");
         setCompleted(false);
-        setIsOpen(false); // Close the dialog
+        setIsOpen(false);
         toast.success(res.success);
         // window.location.reload();
       } else {

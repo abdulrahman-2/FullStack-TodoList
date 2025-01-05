@@ -5,8 +5,15 @@ import Credentials from "next-auth/providers/credentials";
 import User from "@/models/User";
 import bcrypt from "bcryptjs";
 import { connectDB } from "./lib/mongodb";
+import { authConfig } from "./auth.config";
 
-export const { handlers, signIn, signOut, auth } = NextAuth({
+export const {
+  handlers: { GET, POST },
+  signIn,
+  signOut,
+  auth,
+} = NextAuth({
+  ...authConfig,
   providers: [
     GoogleProvider({
       clientId: process.env.AUTH_GOOGLE_ID,
@@ -32,34 +39,59 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
             throw new Error("Invalid password");
           }
           return user;
-        } catch {
+        } catch (error) {
+          console.error("Credentials authorize error:", error);
           return null;
         }
       },
     }),
   ],
-  pages: {
-    signIn: "/login",
-  },
   callbacks: {
-    async jwt({ token, user }) {
-      if (user) {
-        token.id = user.id;
-        token.name = user.name;
-        token.email = user.email;
+    async signIn({ user, account, profile }) {
+      try {
+        await connectDB();
+
+        // Handle GitHub provider
+        if (account?.provider === "github") {
+          const existingUser = await User.findOne({ email: profile?.email });
+          if (!existingUser) {
+            const newUser = new User({
+              _id: profile?.id,
+              name: profile?.name,
+              email: profile?.email,
+              authMethod: "github",
+            });
+            await newUser.save();
+            user.id = newUser._id;
+          } else {
+            user.id = existingUser._id;
+          }
+        }
+
+        // Handle Google provider
+        if (account?.provider === "google") {
+          const existingUser = await User.findOne({ email: profile?.email });
+          if (!existingUser) {
+            const newUser = new User({
+              _id: profile?.sub,
+              name: profile?.name,
+              email: profile?.email,
+              authMethod: "google",
+            });
+            await newUser.save();
+            user.id = newUser._id;
+          } else {
+            user.id = existingUser._id;
+          }
+        }
+
+        return true;
+      } catch (error) {
+        console.error("SignIn callback error:", error);
+        return false;
       }
-      return token;
     },
-    async session({ session, token }) {
-      if (token) {
-        session.user = {
-          id: token.id as string,
-          email: token.email as string,
-          name: token.name as string,
-        } as any;
-      }
-      return session;
-    },
+    ...authConfig.callbacks,
   },
   session: {
     strategy: "jwt",

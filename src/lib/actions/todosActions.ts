@@ -17,8 +17,8 @@ const checkUserExists = async (userId: string) => {
 export const fetchUserTodos = async (userId: string) => {
   try {
     await connectDB();
-    await checkUserExists(userId); // Validate user
-    const todos = await Todo.find({ user: userId }).lean();
+    await checkUserExists(userId);
+    const todos = await Todo.find({ userId }).lean();
     return todos;
   } catch (error) {
     console.error("Error fetching user todos:", error);
@@ -38,15 +38,19 @@ export const addTodo = async (
       throw new Error("Title is required");
     }
     const user = await checkUserExists(userId);
+    // Create a new todo
     const todo = new Todo({
+      _id: new mongoose.Types.ObjectId(),
       title,
       completed,
       priority,
-      user: user._id,
+      userId: user._id,
     });
-    user.todos.push(todo._id);
+
     await todo.save();
+
     revalidatePath("/todos");
+
     return { success: "Todo added successfully" };
   } catch (error) {
     if (error instanceof mongoose.Error.ValidationError) {
@@ -117,7 +121,7 @@ export const deleteAllTodo = async (userId: string) => {
     await connectDB();
     await checkUserExists(userId); // Validate user
 
-    await Todo.deleteMany({ user: userId });
+    await Todo.deleteMany({ userId });
     revalidatePath("/todos");
     return { success: "All todos deleted successfully" };
   } catch (error) {
